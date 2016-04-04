@@ -18,7 +18,7 @@ class Wsf extends Module
 
    public function install()
   {
-    return (parent::install() && $this->registerHook('displayProductButtons'));
+    return (parent::install() && $this->registerHook('displayProductButtons') && $this->registerHook('displayHome'));
   }
 
   public function getContent()
@@ -58,5 +58,16 @@ class Wsf extends Module
       )
     );
     return $this->display(__FILE__, 'displayProductButtons.tpl');
+  }
+
+  public function hookDisplayHome($params)
+  {
+    $data = base64_decode(Configuration::get('SWF_URL'));
+    $this->smarty->assign(
+      array(
+        'data' => $data
+      )
+    );
+    return $this->display(__FILE__, 'displayHome.tpl');
   }
 }
